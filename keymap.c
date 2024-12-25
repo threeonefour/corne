@@ -10,18 +10,9 @@ enum custom_keycodes {
 	CKC_J,
 	CKC_K,
 	CKC_L,
-	CKC_EXCLM,
+	CKC_HASH,
     SMTD_KEYCODES_END,
 
-  BRACES,
-  BRACES_CL,
-  INTRPKT,
-  UEMLAUT,
-  AEMLAUT,
-  OEMLAUT,
-  EXCLM,
-  ESZET,
-  SPEC,
 };
 
 #include "sm_td.h"
@@ -31,7 +22,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t* record) {
 if (!process_smtd(keycode, record)) {
         return false;
     }
-
+/*
 const uint8_t mods = get_mods();
 const uint8_t oneshot_mods = get_oneshot_mods();
 
@@ -42,13 +33,13 @@ switch (keycode) {
       clear_oneshot_mods();  // Temporarily disable mods.
       unregister_mods(MOD_MASK_CSAG);
       if ((mods | oneshot_mods) & MOD_MASK_SHIFT) {
-        SEND_STRING("{");
+        tap_code(DE_LCBR);
       } else if ((mods | oneshot_mods) & MOD_MASK_CTRL) {
-        SEND_STRING("[");
+        tap_code(DE_LBRC);
       }	else if ((mods | oneshot_mods) & MOD_MASK_ALT) {
-        SEND_STRING("<");
+        tap_code(DE_LABK);
       } else {
-        SEND_STRING("(");
+        tap_code(DE_LPRN);
       }
       
       register_mods(mods);  // Restore mods.
@@ -60,13 +51,13 @@ switch (keycode) {
       clear_oneshot_mods();  // Temporarily disable mods.
       unregister_mods(MOD_MASK_CSAG);
       if ((mods | oneshot_mods) & MOD_MASK_SHIFT) {
-        SEND_STRING("}");
+        tap_code(DE_RCBR);
       } else if ((mods | oneshot_mods) & MOD_MASK_CTRL) {
-        SEND_STRING("]");
+        tap_code(DE_RBRC);
       }	else if ((mods | oneshot_mods) & MOD_MASK_ALT) {
-        SEND_STRING(">");
+        tap_code(DE_RABK);
       } else {
-        SEND_STRING(")");
+        tap_code(DE_RPRN);
       }
       
       register_mods(mods);  // Restore mods.
@@ -79,13 +70,13 @@ switch (keycode) {
       clear_oneshot_mods();  // Temporarily disable mods.
       unregister_mods(MOD_MASK_CSAG);
       if ((mods | oneshot_mods) & MOD_MASK_SHIFT) {
-        SEND_STRING("°");
+        tap_code(DE_DEG);
       } else if ((mods | oneshot_mods) & MOD_MASK_CTRL) {
-        SEND_STRING("€");
+        tap_code(DE_EURO);
       }	else if ((mods | oneshot_mods) & MOD_MASK_ALT) {
-        SEND_STRING("@");
+        tap_code(DE_AT);
       } else {
-        SEND_STRING("^");
+        tap_code(DE_CIRC);
       }
       
       register_mods(mods);  // Restore mods.
@@ -98,13 +89,13 @@ switch (keycode) {
       clear_oneshot_mods();  // Temporarily disable mods.
       unregister_mods(MOD_MASK_CSAG);
       if ((mods | oneshot_mods) & MOD_MASK_SHIFT) {
-        SEND_STRING(",");
+        tap_code(DE_COMM);
       } else if ((mods | oneshot_mods) & MOD_MASK_CTRL) {
-        SEND_STRING(":");
+        tap_code(DE_COLN);
       }	else if ((mods | oneshot_mods) & MOD_MASK_ALT) {
-        SEND_STRING(";");
+        tap_code(DE_SCLN);
       } else {
-        SEND_STRING(".");
+        tap_code(DE_DOT);
       }
       register_mods(mods);  // Restore mods.
     }
@@ -201,20 +192,20 @@ switch (keycode) {
 	
   }
 	
-	
+	*/
 return true;
 }
 
 void on_smtd_action(uint16_t keycode, smtd_action action, uint8_t tap_count) {  // smtd mod tap implementation
     switch (keycode) {
-        SMTD_MT(CKC_A, AEMLAUT, KC_LSFT)
-        SMTD_MT(CKC_S, ESZET, KC_LEFT_ALT)
+        SMTD_MT(CKC_A, DE_A, KC_LSFT)
+        SMTD_MT(CKC_S, DE_S, KC_LEFT_ALT)
         SMTD_MT(CKC_D, DE_D, KC_LEFT_CTRL)
         SMTD_MT(CKC_F, DE_F, KC_LEFT_GUI)
 		SMTD_MT(CKC_J, DE_J, KC_LEFT_GUI)
         SMTD_MT(CKC_K, DE_K, KC_LEFT_CTRL)
         SMTD_MT(CKC_L, DE_L, KC_LEFT_ALT)
-        SMTD_MT(CKC_EXCLM, EXCLM, KC_LSFT)
+        SMTD_MT(CKC_HASH, DE_HASH, KC_LSFT)
 		
 		
 		
@@ -227,13 +218,13 @@ void on_smtd_action(uint16_t keycode, smtd_action action, uint8_t tap_count) {  
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [0] = LAYOUT_split_3x5_3_ex2(
   //,--------------------------------------------------------------------------.         ,-----------------------------------------------------------------------.
-         DE_Q,            DE_W,           DE_E,       DE_R,      DE_T, KC_TAB,            SPEC,     DE_Z,    UEMLAUT,       DE_I,       OEMLAUT,       DE_P,
+         DE_Q,            DE_W,           DE_E,       DE_R,      DE_T, KC_ESC,            DE_SS,     DE_Y,    DE_U,       DE_I,       DE_O,       DE_P,
   //+----------------+-------------+-------------+-------------+--------------+          |---------+-----+-------------+-------------+-------------+-------------+
-         CKC_A,          CKC_S,       CKC_D,       CKC_F,       DE_G, LCTL(DE_C),         LCTL(DE_V),DE_H,   CKC_J,       CKC_K,       CKC_L,       CKC_EXCLM,
+         CKC_A,          CKC_S,       CKC_D,       CKC_F,       DE_G, LCTL(DE_C),         LCTL(DE_V),DE_H,   CKC_J,       CKC_K,       CKC_L,       CKC_HASH,
   //+----------------+-------------+-------------+-------------+-----+--------'          `---------+-----+-------------+-------------+-------------+-------------+
-         DE_Y,              DE_X,        DE_C,        DE_V,     DE_B,                                DE_N,    DE_M,       INTRPKT,        BRACES,      BRACES_CL,
+         DE_Z,              DE_X,        DE_C,        DE_V,     DE_B,                                DE_N,    DE_M,       DE_COMM,        DE_DOT,      DE_MINS,
   //+----------------+-------------+-------------+-------------+-----+--------.          ,---------+-----+-------------+-------------+-------------+-------------+
-                                               KC_ESC,    TL_LOWR,    KC_ENT,             KC_SPC,    TL_UPPR,    KC_BSPC
+                                               KC_TAB,    TL_UPPR,    KC_SPC,             KC_ENT,    TL_LOWR,    KC_BSPC
                                           //`---------------------------------'            ---------------------------------'
 
   ),
@@ -242,35 +233,35 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //,-----------------------------------------------------.  ,------------------------------------------------------.
          DE_1,    DE_2,    DE_3,    DE_4,    DE_5, _______,   _______,    DE_6,    DE_7,    DE_8,    DE_9,    DE_0,
   //+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+
-     _______,  _______, _______, _______, XXXXXXX, _______,    _______, XXXXXXX, _______, KC_UP     ,_______, _______,
+     _______,  _______, _______, _______, DE_SLSH, _______,    _______, DE_BSLS, XXXXXXX, KC_UP     ,DE_PIPE, DE_AT,
   //+--------+--------+--------+--------+--------+--------'  `--------+--------+--------+--------+--------+--------+
-      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                      _______, KC_LEFT, KC_DOWN,  KC_RIGHT, XXXXXXX,
+      DE_EXLM, DE_DQUO, DE_DLR, DE_PERC, DE_AMPR,                      DE_CIRC, KC_LEFT, KC_DOWN,  KC_RIGHT, DE_EURO,
   //+--------+--------+--------+--------+--------+--------.  ,--------+--------+--------+--------+--------+--------+
-                                KC_ESC, _______,   KC_ENT,   KC_SPC, _______, KC_BSPC
+                                _______, _______,   _______,   _______, _______, _______
                             //`--------------------------'  `--------------------------'
   ),
 
   [2] = LAYOUT_split_3x5_3_ex2(
   //,-----------------------------------------------------.  ,------------------------------------------------------
-     DE_7,      DE_8,   DE_9,    DE_PLUS, DE_MINS, _______,     _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+     DE_7,      DE_8,   DE_9,    DE_PLUS, DE_MINS, _______,     _______, DE_LBRC, DE_RBRC, DE_LCBR, DE_RCBR, DE_ACUT,
   //+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+
      DE_4,      DE_5,   DE_6,   DE_ASTR, DE_SLSH, _______,    _______, XXXXXXX,_______,_______,_______,_______,
   //|--------+--------+--------+--------+--------+--------'  `--------+--------+--------+--------+--------+--------+
-      DE_1,      DE_2,    DE_3,     DE_0, XXXXXXX,                      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+      DE_1,      DE_2,    DE_3,     DE_0, XXXXXXX,                      DE_LPRN, DE_RPRN, DE_LABK, DE_RABK, XXXXXXX,
   //+--------+--------+--------+--------+--------+--------.  ,--------+--------+--------+--------+--------+--------+
-                                  KC_ESC, _______,  KC_ENT,    KC_SPC, _______, KC_BSPC
+                                  _______, _______,  _______,    _______, _______, _______
                              //`--------------------------'  `--------------------------'
   ),
 
   [3] = LAYOUT_split_3x5_3_ex2(
   //,-----------------------------------------------------.  ,-----------------------------------------------------
-      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,    XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+      XXXXXXX, XXXXXXX, XXXXXXX, DE_DEG, XXXXXXX, XXXXXXX,    XXXXXXX, XXXXXXX, DE_UDIA, XXXXXXX, DE_ODIA, XXXXXXX,
   //+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+
-      RGB_HUI, RGB_SAI, RGB_VAI, XXXXXXX, XXXXXXX, XXXXXXX,    XXXXXXX, XXXXXXX,_______,_______,_______,_______,
+      DE_ADIA, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,    XXXXXXX, XXXXXXX,_______,_______,_______,_______,
   //+--------+--------+--------+--------+--------+--------'  `--------+--------+--------+--------+--------+--------+
-      RGB_HUD, RGB_SAD, RGB_VAD, XXXXXXX, XXXXXXX,                      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
   //+--------+--------+--------+--------+--------+--------.  ,--------+--------+--------+--------+--------+--------+
-                                  KC_ESC, _______,  KC_ENT,     KC_SPC, _______, KC_BSPC
+                                  _______, _______,  _______,     _______, _______, _______
                              //`--------------------------'  `--------------------------'
   )
 };
@@ -278,9 +269,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 #ifdef ENCODER_MAP_ENABLE
 const uint16_t PROGMEM encoder_map[][NUM_ENCODERS][NUM_DIRECTIONS] = {
-  [0] = { ENCODER_CCW_CW(KC_PGUP, KC_PGDN), ENCODER_CCW_CW(KC_LEFT, KC_RIGHT), },
-  [1] = { ENCODER_CCW_CW(KC_PGUP, KC_PGDN), ENCODER_CCW_CW(KC_LEFT, KC_RIGHT), },
-  [2] = { ENCODER_CCW_CW(KC_PGUP, KC_PGDN), ENCODER_CCW_CW(KC_LEFT, KC_RIGHT), },
-  [3] = { ENCODER_CCW_CW(KC_PGUP, KC_PGDN), ENCODER_CCW_CW(KC_LEFT, KC_RIGHT), },
+  [0] = { ENCODER_CCW_CW(KC_PGUP, KC_PGDN), ENCODER_CCW_CW(KC_PGUP, KC_PGDN), ENCODER_CCW_CW(KC_PGUP, KC_PGDN), ENCODER_CCW_CW(KC_LEFT, KC_RIGHT)},
+  [1] = { ENCODER_CCW_CW(KC_PGUP, KC_PGDN), ENCODER_CCW_CW(KC_PGUP, KC_PGDN), ENCODER_CCW_CW(KC_PGUP, KC_PGDN), ENCODER_CCW_CW(KC_LEFT, KC_RIGHT)},
+  [2] = { ENCODER_CCW_CW(KC_PGUP, KC_PGDN), ENCODER_CCW_CW(KC_PGUP, KC_PGDN), ENCODER_CCW_CW(KC_PGUP, KC_PGDN), ENCODER_CCW_CW(KC_LEFT, KC_RIGHT)},
+  [3] = { ENCODER_CCW_CW(KC_PGUP, KC_PGDN), ENCODER_CCW_CW(KC_PGUP, KC_PGDN), ENCODER_CCW_CW(KC_PGUP, KC_PGDN), ENCODER_CCW_CW(KC_LEFT, KC_RIGHT)},
 };
 #endif
